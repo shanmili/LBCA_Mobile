@@ -1,9 +1,9 @@
 import React from "react";
 import {
   ScrollView,
-  SafeAreaView,
   StatusBar,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/constants/colors";
 import { TopHeader } from "@/components/top-header";
 import { BottomTabBar } from "@/components/bottom-tab-bar";
