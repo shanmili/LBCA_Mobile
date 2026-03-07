@@ -71,12 +71,12 @@ export function MessagesTab() {
               <Text style={avatarText(COLORS.accent)}>{m.avatar}</Text>
             </View>
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, minWidth: 0 }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 4 }}>
               <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.text }}>{m.sender}</Text>
               <Text style={{ fontSize: 11, color: COLORS.muted }}>{m.time}</Text>
             </View>
-            <Text numberOfLines={1} style={{ fontSize: 12, color: COLORS.muted }}>{m.lastMsg}</Text>
+            <Text style={{ fontSize: 12, color: COLORS.muted }}>{m.lastMsg}</Text>
           </View>
         </TouchableOpacity>
       ))}
