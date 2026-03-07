@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity, View } from "react-native";
 import { useTheme } from "../../constants/useTheme";
 
 const Theme = () => {
@@ -30,7 +30,11 @@ const Theme = () => {
           alignSelf: isDarkMode ? "flex-end" : "flex-start",
         }}
       >
-        <Text style={{ fontSize: 10 }}>{isDarkMode ? "🌙" : "☀️"}</Text>
+        <Ionicons
+          name={isDarkMode ? "moon" : "sunny"}
+          size={12}
+          color={isDarkMode ? colors.accent : "#F59E0B"}
+        />
       </View>
     </TouchableOpacity>
   );
