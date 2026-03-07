@@ -76,7 +76,7 @@ export function TopHeader({ userRole = "admin", adminPhoto = null, onLogout, onN
 
             {/* Log Out */}
             <TouchableOpacity onPress={handleLogout} style={{ flexDirection: "row", alignItems: "center", padding: 14 }}>
-              <Text style={{ fontSize: 16, marginRight: 10 }}>🚪</Text>
+              <Text style={{ fontSize: 16, marginRight: 10 }}></Text>
               <Text style={{ fontSize: 13, fontWeight: "600", color: colors.red }}>Log Out</Text>
             </TouchableOpacity>
           </View>

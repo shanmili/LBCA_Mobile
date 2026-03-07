@@ -1,0 +1,57 @@
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { useTheme } from "../../constants/useTheme";
+import { gradesData, subjectColors } from "../../constants/data";
+import { getStyles, pill, pillText, avatar, avatarText } from "../../constants/styles";
+import { StatCard } from "../common/dashboard/StatCard";
+import { SubjectProgress } from "../common/dashboard/SubjectProgress";
+
+export function DashboardTab({ unreadCount, onNotifPress, onRiskPress }) {
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
+  return (
+    <View style={styles.pagePad}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 24 }}>
+        <View>
+          <Text style={styles.p}>Good morning 👋</Text>
+          <Text style={styles.h1}>Maria Santos</Text>
+          <View style={[pill(colors.green), { marginTop: 6 }]}>
+            <Text style={pillText(colors.green)}>● Grade 8 – Section A</Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={onNotifPress}>
+          <View style={avatar()}>
+            <Text style={avatarText(colors.accent)}>🔔</Text>
+          </View>
+          {unreadCount > 0 && (
+            <View style={styles.badge}>
+              <Text style={{ fontSize: 10, fontWeight: "800", color: "#fff" }}>{unreadCount}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
+        <StatCard title="GWA" value="89.8" color={colors.green} icon="📈" />
+        <StatCard title="Attendance" value="96%" color={colors.accent} icon="📅" />
+        <StatCard title="Risk" value="Low" color={colors.green} icon="🛡️" onPress={onRiskPress} />
+      </View>
+
+      <View style={[styles.card, { marginBottom: 16 }]}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <Text style={styles.h2}>Academic Trend</Text>
+          <View style={pill(colors.accent)}>
+            <Text style={pillText(colors.accent)}>Q1 – Q3</Text>
+          </View>
+        </View>
+        {gradesData.slice(0, 4).map(s => {
+          const avg = Math.round((s.q1 + s.q2 + s.q3) / 3);
+          const color = subjectColors[s.subject] || colors.accent;
+          return (
+            <SubjectProgress key={s.subject} subject={s.subject} value={avg} color={color} />
+          );
+        })}
+      </View>
+    </View>
+  );
+}

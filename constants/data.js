@@ -49,3 +49,44 @@ export const subjectColors = {
 };
 
 export const getGradeColor = (g) => g >= 90 ? COLORS.green : g >= 80 ? COLORS.accent : g >= 75 ? COLORS.amber : COLORS.red;
+
+// ── Current Student (logged-in parent's child) ──────────────
+export const currentStudent = {
+  id: 100,
+  firstName: "Maria",
+  lastName: "Santos",
+  middleName: "Luz",
+  gradeLevel: "Grade 8",
+  section: "Section A",
+  riskLevel: "low",
+  pacesBehind: 1,
+  guardianLastName: "Santos",
+  guardianContact: "09171234568",
+  pacePercent: 89,
+  attendance: 96,
+  status: "On Track",
+  trend: "improving",
+  lastActivity: "Today",
+  subjects: [
+    { subject: "Mathematics", pacePercent: 88, pacesBehind: 1, teacher: "Mr. Reyes", status: "On Track", trend: "improving" },
+    { subject: "English", pacePercent: 92, pacesBehind: 0, teacher: "Ms. Lim", status: "On Track", trend: "improving" },
+    { subject: "Science", pacePercent: 85, pacesBehind: 1, teacher: "Mr. Cruz", status: "On Track", trend: "stable" },
+    { subject: "Filipino", pacePercent: 90, pacesBehind: 0, teacher: "Ms. Dela Rosa", status: "On Track", trend: "improving" },
+    { subject: "Araling Panlipunan", pacePercent: 86, pacesBehind: 1, teacher: "Mr. Aquino", status: "On Track", trend: "stable" },
+    { subject: "MAPEH", pacePercent: 94, pacesBehind: 0, teacher: "Ms. Bautista", status: "On Track", trend: "improving" },
+  ],
+};
+
+// ── Early Warning Data ──────────────────────────────────────
+export const earlyWarningStudents = [
+  { id: 1, firstName: "Juan", lastName: "Dela Cruz", middleName: "Pascual", gradeLevel: "Grade 7", section: "Faith", riskLevel: "high", pacesBehind: 8, subject: "Mathematics", teacher: "Mr. Reyes", lastActivity: "2 weeks ago", trend: "declining", guardianLastName: "Dela Cruz", guardianContact: "09171234567", pacePercent: 58, attendance: 82, status: "At Risk" },
+  { id: 2, firstName: "Ana", lastName: "Santos", middleName: "Rivera", gradeLevel: "Grade 7", section: "Faith", riskLevel: "critical", pacesBehind: 12, subject: "Science", teacher: "Mr. Cruz", lastActivity: "3 weeks ago", trend: "declining", guardianLastName: "Santos", guardianContact: "09181234567", pacePercent: 35, attendance: 68, status: "Critical" },
+  { id: 3, firstName: "Carlos", lastName: "Garcia", middleName: "", gradeLevel: "Grade 8", section: "Hope", riskLevel: "moderate", pacesBehind: 4, subject: "English", teacher: "Ms. Lim", lastActivity: "3 days ago", trend: "stable", guardianLastName: "Garcia", guardianContact: "09191234567", pacePercent: 72, attendance: 90, status: "Warning" },
+  { id: 4, firstName: "Maria", lastName: "Reyes", middleName: "Aquino", gradeLevel: "Grade 8", section: "Hope", riskLevel: "high", pacesBehind: 7, subject: "Filipino", teacher: "Ms. Dela Rosa", lastActivity: "1 week ago", trend: "declining", guardianLastName: "Reyes", guardianContact: "09201234567", pacePercent: 55, attendance: 78, status: "At Risk" },
+  { id: 5, firstName: "Pedro", lastName: "Aquino", middleName: "Santos", gradeLevel: "Grade 9", section: "Love", riskLevel: "low", pacesBehind: 2, subject: "Mathematics", teacher: "Mr. Reyes", lastActivity: "1 day ago", trend: "improving", guardianLastName: "Aquino", guardianContact: "09211234567", pacePercent: 91, attendance: 96, status: "On Track" },
+  { id: 6, firstName: "Sofia", lastName: "Bautista", middleName: "Lim", gradeLevel: "Grade 9", section: "Love", riskLevel: "moderate", pacesBehind: 5, subject: "Araling Panlipunan", teacher: "Mr. Aquino", lastActivity: "5 days ago", trend: "stable", guardianLastName: "Bautista", guardianContact: "09221234567", pacePercent: 68, attendance: 88, status: "Warning" },
+  { id: 7, firstName: "Miguel", lastName: "Torres", middleName: "Cruz", gradeLevel: "Grade 10", section: "Grace", riskLevel: "critical", pacesBehind: 15, subject: "Science", teacher: "Mr. Cruz", lastActivity: "1 month ago", trend: "declining", guardianLastName: "Torres", guardianContact: "09231234567", pacePercent: 28, attendance: 60, status: "Critical" },
+  { id: 8, firstName: "Isabella", lastName: "Cruz", middleName: "", gradeLevel: "Grade 10", section: "Grace", riskLevel: "low", pacesBehind: 1, subject: "MAPEH", teacher: "Ms. Bautista", lastActivity: "Today", trend: "improving", guardianLastName: "Cruz", guardianContact: "09241234567", pacePercent: 95, attendance: 98, status: "On Track" },
+  { id: 9, firstName: "Rafael", lastName: "Mendoza", middleName: "Fernandez", gradeLevel: "Grade 7", section: "Faith", riskLevel: "high", pacesBehind: 9, subject: "English", teacher: "Ms. Lim", lastActivity: "10 days ago", trend: "declining", guardianLastName: "Mendoza", guardianContact: "09251234567", pacePercent: 52, attendance: 75, status: "At Risk" },
+  { id: 10, firstName: "Lucia", lastName: "Fernandez", middleName: "Reyes", gradeLevel: "Grade 8", section: "Hope", riskLevel: "moderate", pacesBehind: 3, subject: "Mathematics", teacher: "Mr. Reyes", lastActivity: "4 days ago", trend: "stable", guardianLastName: "Fernandez", guardianContact: "09261234567", pacePercent: 74, attendance: 92, status: "Warning" },
+];
