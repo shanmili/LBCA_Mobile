@@ -75,8 +75,8 @@ const WarningTable = ({ students, onNavigate }) => {
                     {student.firstName[0]}{student.lastName[0]}
                   </Text>
                 </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 14, fontWeight: "700", color: colors.text }} numberOfLines={1}>
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Text style={{ fontSize: 14, fontWeight: "700", color: colors.text }}>
                     {student.firstName} {student.lastName}
                   </Text>
                   <Text style={{ fontSize: 11, color: colors.muted }}>
