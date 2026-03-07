@@ -1,11 +1,13 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { ThemeProvider, useTheme } from '../constants/useTheme';
 
 export const unstable_settings = {
   initialRouteName: 'login',
 };
 
-export default function RootLayout() {
+function LayoutContent() {
+  const { isDarkMode } = useTheme();
   return (
     <>
       <Stack>
@@ -13,7 +15,15 @@ export default function RootLayout() {
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="home" options={{ headerShown: false }} />
       </Stack>
-      <StatusBar style="light" />
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
     </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <LayoutContent />
+    </ThemeProvider>
   );
 }

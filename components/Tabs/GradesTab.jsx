@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import { COLORS } from "@/constants/colors";
-import { gradesData, subjectColors, getGradeColor } from "@/constants/data";
-import { styles, pill, pillText } from "@/constants/styles";
+import { COLORS } from "../../constants/colors";
+import { gradesData, subjectColors, getGradeColor } from "../../constants/data";
+import { styles, pill, pillText } from "../../constants/styles";
 
 export function GradesTab() {
   return (

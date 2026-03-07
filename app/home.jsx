@@ -4,21 +4,22 @@ import {
   StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS } from "@/constants/colors";
-import { notifications } from "@/constants/data";
-import { TopHeader } from "@/components/top-header";
-import { BottomTabBar } from "@/components/bottom-tab-bar";
-import { UnderMaintenance } from "@/components/under-maintenance";
+import { useTheme } from "../constants/useTheme";
+import { notifications } from "../constants/data";
+import { TopHeader } from "../components/layout/TopHeader";
+import { BottomTabBar } from "../components/layout/BottomTabBar";
+import { UnderMaintenance } from "../components/common/under-maintenance";
 
 export default function HomeScreen() {
+  const { colors, isDarkMode } = useTheme();
   const [activeTab, setTab] = useState("home");
   const unreadCount = notifications.filter(n => n.unread).length;
 
-  const handleTabChange = (t: string) => { setTab(t); };
+  const handleTabChange = (t) => { setTab(t); };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }}>
-      <StatusBar barStyle="light-content" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
+      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
       <TopHeader />
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <UnderMaintenance />
