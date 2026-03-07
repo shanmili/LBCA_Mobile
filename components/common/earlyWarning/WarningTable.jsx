@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useTheme } from "../../../constants/useTheme";
 
 const riskColors = {
@@ -17,9 +17,9 @@ const riskLabels = {
 };
 
 const trendIcons = {
-  declining: "↓",
-  stable: "→",
-  improving: "↑",
+  declining: { name: "arrow-down", color: null },
+  stable: { name: "remove", color: null },
+  improving: { name: "arrow-up", color: null },
 };
 
 const WarningTable = ({ students, onNavigate }) => {
@@ -28,7 +28,12 @@ const WarningTable = ({ students, onNavigate }) => {
   if (students.length === 0) {
     return (
       <View style={{ paddingVertical: 40, alignItems: "center" }}>
-        <Text style={{ fontSize: 32, marginBottom: 8 }}>✅</Text>
+        <Ionicons
+          name="checkmark-circle"
+          size={32}
+          color="#22C55E"
+          style={{ marginBottom: 8 }}
+        />
         <Text style={{ fontSize: 14, color: colors.muted, fontWeight: "600" }}>
           No at-risk students found
         </Text>
@@ -41,8 +46,11 @@ const WarningTable = ({ students, onNavigate }) => {
       {students.map((student) => {
         const riskColor = colors[riskColors[student.riskLevel]];
         const trendColor =
-          student.trend === "improving" ? colors.green :
-          student.trend === "declining" ? colors.red : colors.muted;
+          student.trend === "improving"
+            ? colors.green
+            : student.trend === "declining"
+              ? colors.red
+              : colors.muted;
 
         return (
           <TouchableOpacity
@@ -58,8 +66,17 @@ const WarningTable = ({ students, onNavigate }) => {
             }}
           >
             {/* Header row */}
-            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
+              >
                 <View
                   style={{
                     width: 36,
@@ -71,12 +88,25 @@ const WarningTable = ({ students, onNavigate }) => {
                     marginRight: 10,
                   }}
                 >
-                  <Text style={{ fontSize: 13, fontWeight: "800", color: riskColor }}>
-                    {student.firstName[0]}{student.lastName[0]}
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: "800",
+                      color: riskColor,
+                    }}
+                  >
+                    {student.firstName[0]}
+                    {student.lastName[0]}
                   </Text>
                 </View>
                 <View style={{ flex: 1, minWidth: 0 }}>
-                  <Text style={{ fontSize: 14, fontWeight: "700", color: colors.text }}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "700",
+                      color: colors.text,
+                    }}
+                  >
                     {student.firstName} {student.lastName}
                   </Text>
                   <Text style={{ fontSize: 11, color: colors.muted }}>
@@ -94,7 +124,9 @@ const WarningTable = ({ students, onNavigate }) => {
                   borderRadius: 8,
                 }}
               >
-                <Text style={{ fontSize: 9, fontWeight: "800", color: riskColor }}>
+                <Text
+                  style={{ fontSize: 9, fontWeight: "800", color: riskColor }}
+                >
                   {riskLabels[student.riskLevel]}
                 </Text>
               </View>
@@ -103,22 +135,63 @@ const WarningTable = ({ students, onNavigate }) => {
             {/* Details row */}
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
               <View>
-                <Text style={{ fontSize: 10, color: colors.muted }}>Subject</Text>
-                <Text style={{ fontSize: 12, fontWeight: "600", color: colors.text }}>{student.subject}</Text>
-              </View>
-              <View>
-                <Text style={{ fontSize: 10, color: colors.muted }}>PACEs Behind</Text>
-                <Text style={{ fontSize: 12, fontWeight: "800", color: riskColor }}>{student.pacesBehind}</Text>
-              </View>
-              <View>
-                <Text style={{ fontSize: 10, color: colors.muted }}>Trend</Text>
-                <Text style={{ fontSize: 12, fontWeight: "600", color: trendColor }}>
-                  {trendIcons[student.trend]} {student.trend}
+                <Text style={{ fontSize: 10, color: colors.muted }}>
+                  Subject
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "600",
+                    color: colors.text,
+                  }}
+                >
+                  {student.subject}
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 10, color: colors.muted }}>Last Active</Text>
-                <Text style={{ fontSize: 12, fontWeight: "600", color: colors.text }}>{student.lastActivity}</Text>
+                <Text style={{ fontSize: 10, color: colors.muted }}>
+                  PACEs Behind
+                </Text>
+                <Text
+                  style={{ fontSize: 12, fontWeight: "800", color: riskColor }}
+                >
+                  {student.pacesBehind}
+                </Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 10, color: colors.muted }}>Trend</Text>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
+                >
+                  <Ionicons
+                    name={trendIcons[student.trend].name}
+                    size={12}
+                    color={trendColor}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: trendColor,
+                    }}
+                  >
+                    {student.trend}
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <Text style={{ fontSize: 10, color: colors.muted }}>
+                  Last Active
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "600",
+                    color: colors.text,
+                  }}
+                >
+                  {student.lastActivity}
+                </Text>
               </View>
             </View>
           </TouchableOpacity>
