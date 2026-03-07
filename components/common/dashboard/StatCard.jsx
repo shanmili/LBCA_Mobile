@@ -1,8 +1,16 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useTheme } from "../../../constants/useTheme";
 
-export function StatCard({ title, value, icon, color, trend, subtext, onPress }) {
+export function StatCard({
+  title,
+  value,
+  icon,
+  color,
+  trend,
+  subtext,
+  onPress,
+}) {
   const { colors } = useTheme();
 
   const Container = onPress ? TouchableOpacity : View;
@@ -22,17 +30,40 @@ export function StatCard({ title, value, icon, color, trend, subtext, onPress })
         marginHorizontal: 4,
       }}
     >
-      {icon && <Text style={{ fontSize: 20, marginBottom: 4 }}>{icon}</Text>}
+      {icon && (
+        <Ionicons
+          name={icon}
+          size={20}
+          color={color}
+          style={{ marginBottom: 4 }}
+        />
+      )}
       <Text style={{ fontSize: 18, fontWeight: "800", color }}>{value}</Text>
-      <Text style={{ fontSize: 11, color: colors.muted, fontWeight: "600", marginTop: 4 }}>{title}</Text>
+      <Text
+        style={{
+          fontSize: 11,
+          color: colors.muted,
+          fontWeight: "600",
+          marginTop: 4,
+        }}
+      >
+        {title}
+      </Text>
       {(trend || subtext) && (
-        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}
+        >
           {trend && (
-            <Text style={{ fontSize: 11, color: trend === "up" ? colors.green : colors.red, marginRight: 4 }}>
-              {trend === "up" ? "↑" : "↓"}
-            </Text>
+            <Ionicons
+              name={trend === "up" ? "arrow-up" : "arrow-down"}
+              size={11}
+              color={trend === "up" ? colors.green : colors.red}
+              style={{ marginRight: 4 }}
+            />
           )}
-          {subtext && <Text style={{ fontSize: 10, color: colors.muted }}>{subtext}</Text>}
+          {subtext && (
+            <Text style={{ fontSize: 10, color: colors.muted }}>{subtext}</Text>
+          )}
         </View>
       )}
     </Container>
