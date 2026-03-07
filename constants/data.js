@@ -43,9 +43,9 @@ export const schedule = [
   ]},
 ];
 
-export const subjectColors: Record<string, string> = {
+export const subjectColors = {
   "Mathematics": "#38BDF8", "English": "#34D399", "Science": "#A78BFA",
   "Filipino": "#FBBF24", "Araling Panlipunan": "#F87171", "MAPEH": "#FB923C",
 };
 
-export const getGradeColor = (g: number) => g >= 90 ? COLORS.green : g >= 80 ? COLORS.accent : g >= 75 ? COLORS.amber : COLORS.red;
+export const getGradeColor = (g) => g >= 90 ? COLORS.green : g >= 80 ? COLORS.accent : g >= 75 ? COLORS.amber : COLORS.red;

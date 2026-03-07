@@ -1,15 +1,9 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { COLORS } from "@/constants/colors";
-import { gradesData, subjectColors } from "@/constants/data";
-import { styles, pill, pillText, avatar, avatarText } from "@/constants/styles";
-
-interface HomeTabProps {
-  unreadCount: number;
-  onNotifPress: () => void;
-}
-
-export function HomeTab({ unreadCount, onNotifPress }: HomeTabProps) {
+import { COLORS } from "../../constants/colors";
+import { gradesData, subjectColors } from "../../constants/data";
+import { styles, pill, pillText, avatar, avatarText } from "../../constants/styles";
+export function DashboardTab({ unreadCount, onNotifPress }) {
   return (
     <View style={styles.pagePad}>
       <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 24 }}>

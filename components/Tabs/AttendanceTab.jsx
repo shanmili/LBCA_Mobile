@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { COLORS } from "@/constants/colors";
-import { attendanceData } from "@/constants/data";
-import { styles } from "@/constants/styles";
+import { COLORS } from "../../constants/colors";
+import { attendanceData } from "../../constants/data";
+import { styles } from "../../constants/styles";
 
 export function AttendanceTab() {
   return (

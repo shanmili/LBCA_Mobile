@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, TextInput } from "react-native";
-import { COLORS } from "@/constants/colors";
-import { messages } from "@/constants/data";
-import { styles, avatar, avatarText } from "@/constants/styles";
+import { COLORS } from "../../constants/colors";
+import { messages } from "../../constants/data";
+import { styles, avatar, avatarText } from "../../constants/styles";
 
 export function MessagesTab() {
-  const [selectedChat, setSelectedChat] = useState<number | null>(null);
+  const [selectedChat, setSelectedChat] = useState(null);
   const [chatInput, setChatInput] = useState("");
   const [chatMessages, setChatMessages] = useState([
     { from: "teacher", text: "Maria has been performing well. Keep it up!", time: "Yesterday" },
@@ -21,11 +21,11 @@ export function MessagesTab() {
             <Text style={{ color: COLORS.text, fontSize: 13, fontWeight: "700" }}>← Back</Text>
           </TouchableOpacity>
           <View style={[avatar(COLORS.accent, 36), { marginRight: 12 }]}>
-            <Text style={avatarText(COLORS.accent)}>{chat!.avatar}</Text>
+            <Text style={avatarText(COLORS.accent)}>{chat.avatar}</Text>
           </View>
           <View>
-            <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.text }}>{chat!.sender}</Text>
-            <Text style={{ fontSize: 12, color: COLORS.muted }}>{chat!.subject}</Text>
+            <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.text }}>{chat.sender}</Text>
+            <Text style={{ fontSize: 12, color: COLORS.muted }}>{chat.subject}</Text>
           </View>
         </View>
         
