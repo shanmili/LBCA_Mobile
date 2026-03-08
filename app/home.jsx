@@ -44,7 +44,7 @@ function HomeScreenInner() {
         <DashboardTab
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
-          onRiskPress={() => setShowEarlyWarning(true)}
+          onRiskPress={() => { setTab("alert"); setShowEarlyWarning(true); }}
         />
       );
     }
@@ -53,11 +53,36 @@ function HomeScreenInner() {
       return <GradesScreen />;
     }
 
+    // Alerts tab or Low Risk card → risk detail
+    if (activeTab === "alert") {
+      return <MyRiskDetail onBack={() => { setShowEarlyWarning(false); setTab("home"); }} />;
+    }
+
+    // Notification bell → notifications list
+    if (activeTab === "notif") {
+      return <NotificationsTab onNavigate={(r) => setTab(r)} />;
+    }
+
+    // Schedule tab
+    if (activeTab === "sched") {
+      return <ScheduleTab />;
+    }
+
+    // Profile tab
+    if (activeTab === "profile") {
+      return (
+        <ProfileTab
+          onBack={() => setTab(prevTab)}
+          onLogout={handleLogout}
+        />
+      );
+    }
+
     return <UnderMaintenance />;
   };
 
   // These tabs manage their own scroll internally
-  const selfScrolling = ["notif", "profile", "grades"].includes(activeTab);
+  const selfScrolling = ["notif", "alert", "profile", "grades", "sched"].includes(activeTab);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
