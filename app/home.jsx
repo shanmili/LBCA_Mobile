@@ -10,14 +10,17 @@ import { AttendanceTab } from "../components/Tabs/AttendanceScreen";
 import { DashboardTab } from "../components/Tabs/DashboardScreen";
 import { GradesTab } from "../components/Tabs/GradesScreen";
 import { NotificationsTab } from "../components/Tabs/NotificationsScreen";
+import { ProfileTab } from "../components/Tabs/ProfileScreen";
 import { ScheduleTab } from "../components/Tabs/ScheduleScreen";
 import { notifications } from "../constants/data";
+import { ProfileProvider } from "../constants/ProfileContext";
 import { useTheme } from "../constants/useTheme";
 
-export default function HomeScreen() {
+function HomeScreenInner() {
   const { colors, isDarkMode } = useTheme();
   const [activeTab, setTab] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
+  const [prevTab, setPrevTab] = useState("home"); // for profile back button
   const [unreadCount, setUnreadCount] = useState(
     notifications.filter((n) => n.unread).length,
   );
@@ -31,14 +34,17 @@ export default function HomeScreen() {
     setTab(t);
   };
 
-  // Called from NotificationsTab when user taps a routable notification
   const handleNotifNavigate = (route) => {
     setTab(route);
     setUnreadCount((prev) => Math.max(0, prev - 1));
   };
 
+  const handleProfilePress = () => {
+    setPrevTab(activeTab);
+    setTab("profile");
+  };
+
   const renderContent = () => {
-    // Home tab
     if (activeTab === "home") {
       return (
         <DashboardTab
@@ -49,49 +55,57 @@ export default function HomeScreen() {
       );
     }
 
-    // Alerts tab — Early Warning / Risk Detail (independent, unchanged)
     if (activeTab === "alert") {
       return <MyRiskDetail onBack={() => setTab("home")} />;
     }
 
-    // Grades tab
     if (activeTab === "grades") return <GradesTab />;
-
-    // Attendance tab
     if (activeTab === "attend") return <AttendanceTab />;
+    if (activeTab === "sched") return <ScheduleTab />;
 
-    // Notifications tab (replaces Messages)
     if (activeTab === "notif") {
       return <NotificationsTab onNavigate={handleNotifNavigate} />;
     }
 
-    // Schedule tab
-    if (activeTab === "sched") return <ScheduleTab />;
+    if (activeTab === "profile") {
+      return <ProfileTab onBack={() => setTab(prevTab)} />;
+    }
 
     return <UnderMaintenance />;
   };
 
-  // NotificationsTab manages its own scroll internally
-  const needsScrollWrapper = activeTab !== "notif";
+  // These tabs manage their own scroll internally
+  const selfScrolling = ["notif", "profile"].includes(activeTab);
 
   if (isLoading) return <LoadingScreen message="Preparing your dashboard..." />;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <TopHeader />
-      {needsScrollWrapper ? (
+      <TopHeader onProfilePress={handleProfilePress} />
+      {selfScrolling ? (
+        <>{renderContent()}</>
+      ) : (
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {renderContent()}
         </ScrollView>
-      ) : (
-        <>{renderContent()}</>
       )}
-      <BottomTabBar
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-        unreadCount={unreadCount}
-      />
+      {/* Hide bottom tab bar when in profile screen for a focused experience */}
+      {activeTab !== "profile" && (
+        <BottomTabBar
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          unreadCount={unreadCount}
+        />
+      )}
     </SafeAreaView>
+  );
+}
+
+export default function HomeScreen() {
+  return (
+    <ProfileProvider>
+      <HomeScreenInner />
+    </ProfileProvider>
   );
 }
