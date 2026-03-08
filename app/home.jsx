@@ -9,7 +9,7 @@ import { BottomTabBar } from "../components/layout/BottomTabBar";
 import { TopHeader } from "../components/layout/TopHeader";
 import { AttendanceTab } from "../components/Tabs/AttendanceScreen";
 import { DashboardTab } from "../components/Tabs/DashboardScreen";
-import { GradesTab } from "../components/Tabs/GradesScreen";
+import { GradesScreen } from "../components/Tabs/GradesScreen";
 import { NotificationsTab } from "../components/Tabs/NotificationsScreen";
 import { ProfileTab } from "../components/Tabs/ProfileScreen";
 import { ScheduleTab } from "../components/Tabs/ScheduleScreen";
@@ -48,11 +48,16 @@ function HomeScreenInner() {
         />
       );
     }
+
+    if (activeTab === "grades") {
+      return <GradesScreen />;
+    }
+
     return <UnderMaintenance />;
   };
 
   // These tabs manage their own scroll internally
-  const selfScrolling = ["notif", "profile"].includes(activeTab);
+  const selfScrolling = ["notif", "profile", "grades"].includes(activeTab);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
