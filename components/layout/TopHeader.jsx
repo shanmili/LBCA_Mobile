@@ -9,16 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useProfile } from "../../constants/ProfileContext";
 import { useTheme } from "../../constants/useTheme";
 import Theme from "../common/Theme";
 
-export function TopHeader({
-  userRole = "admin",
-  adminPhoto = null,
-  onLogout,
-  onNavigate,
-}) {
+export function TopHeader({ onLogout, onProfilePress }) {
   const { colors } = useTheme();
+  const { profile } = useProfile();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -35,12 +32,12 @@ export function TopHeader({
 
   const handleProfile = () => {
     closeDropdown();
-    if (onNavigate) onNavigate("account-settings");
+    if (onProfilePress) onProfilePress();
   };
 
-  const userName = userRole === "admin" ? "Admin User" : "Teacher User";
-  const userRoleLabel = userRole === "admin" ? "Administrator" : "Teacher";
-  const avatarInitials = userRole === "admin" ? "AD" : "TC";
+  const fullName = `${profile.firstName} ${profile.lastName}`.trim();
+  const initials =
+    `${profile.firstName?.[0] ?? ""}${profile.lastName?.[0] ?? ""}`.toUpperCase();
 
   return (
     <View
@@ -63,7 +60,7 @@ export function TopHeader({
         LBCA MONITOR
       </Text>
 
-      {/* User Profile Container */}
+      {/* User Profile Avatar */}
       <TouchableOpacity
         onPress={toggleDropdown}
         style={{ flexDirection: "row", alignItems: "center" }}
@@ -76,20 +73,24 @@ export function TopHeader({
             width: 32,
             height: 32,
             borderRadius: 16,
-            backgroundColor: colors.accent,
+            backgroundColor: `${colors.accent}22`,
+            borderWidth: 2,
+            borderColor: `${colors.accent}44`,
             alignItems: "center",
             justifyContent: "center",
             overflow: "hidden",
           }}
         >
-          {adminPhoto ? (
+          {profile.photo ? (
             <Image
-              source={{ uri: adminPhoto }}
+              source={{ uri: profile.photo }}
               style={{ width: 32, height: 32, borderRadius: 16 }}
             />
           ) : (
-            <Text style={{ fontSize: 11, fontWeight: "800", color: "#0F172A" }}>
-              {avatarInitials}
+            <Text
+              style={{ fontSize: 11, fontWeight: "800", color: colors.accent }}
+            >
+              {initials}
             </Text>
           )}
         </View>
@@ -126,23 +127,64 @@ export function TopHeader({
               elevation: 8,
             }}
           >
-            {/* Header */}
+            {/* User info header */}
             <View
               style={{
                 padding: 14,
                 borderBottomWidth: 1,
                 borderColor: colors.border,
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
               }}
             >
-              <Text style={{ fontSize: 12, color: colors.muted }}>
-                Signed in as{" "}
-                <Text style={{ fontWeight: "700", color: colors.text }}>
-                  {userName}
+              <View
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 19,
+                  backgroundColor: `${colors.accent}22`,
+                  borderWidth: 2,
+                  borderColor: `${colors.accent}44`,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                }}
+              >
+                {profile.photo ? (
+                  <Image
+                    source={{ uri: profile.photo }}
+                    style={{ width: 38, height: 38, borderRadius: 19 }}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: "800",
+                      color: colors.accent,
+                    }}
+                  >
+                    {initials}
+                  </Text>
+                )}
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    fontWeight: "700",
+                    color: colors.text,
+                  }}
+                  numberOfLines={1}
+                >
+                  {fullName}
                 </Text>
-              </Text>
-              <Text style={{ fontSize: 11, color: colors.muted, marginTop: 2 }}>
-                {userRoleLabel}
-              </Text>
+                <Text
+                  style={{ fontSize: 11, color: colors.muted, marginTop: 1 }}
+                >
+                  Grade 8 – Section A
+                </Text>
+              </View>
             </View>
 
             {/* Profile */}
@@ -155,7 +197,7 @@ export function TopHeader({
               }}
             >
               <Ionicons
-                name="person"
+                name="person-circle-outline"
                 size={16}
                 color={colors.text}
                 style={{ marginRight: 10 }}
@@ -163,7 +205,7 @@ export function TopHeader({
               <Text
                 style={{ fontSize: 13, fontWeight: "600", color: colors.text }}
               >
-                Profile
+                Edit Profile
               </Text>
             </TouchableOpacity>
 

@@ -6,8 +6,8 @@ const tabs = [
   { key: "home", icon: "grid", label: "Home" },
   { key: "grades", icon: "bar-chart", label: "Grades" },
   { key: "attend", icon: "calendar", label: "Attendance" },
-  { key: "notif", icon: "alert-circle", label: "Alerts" },
-  { key: "msg", icon: "chatbubbles", label: "Messages" },
+  { key: "alert", icon: "alert-circle", label: "Alerts" },
+  { key: "notif", icon: "notifications", label: "Notifications" },
   { key: "sched", icon: "time", label: "Schedule" },
 ];
 
