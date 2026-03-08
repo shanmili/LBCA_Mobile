@@ -12,8 +12,8 @@ const TYPE_CONFIG = {
   schedule: { color: "#34D399", label: "Schedule" },
 };
 
-export function NotificationsTab({ onNavigate }) {
-  const [items, setItems] = useState(notifications);
+export function NotificationsTab({ onNavigate, items: initialItems }) {
+  const [items, setItems] = useState(initialItems || notifications);
   const unreadCount = items.filter((n) => n.unread).length;
 
   const markAllRead = () =>
