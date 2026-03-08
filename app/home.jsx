@@ -23,6 +23,7 @@ function HomeScreenInner() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [prevTab, setPrevTab] = useState("home"); // for profile back button
+  const [showEarlyWarning, setShowEarlyWarning] = useState(false);
   const [unreadCount, setUnreadCount] = useState(
     notifications.filter((n) => n.unread).length,
   );
@@ -58,6 +59,11 @@ function HomeScreenInner() {
     setTimeout(() => {
       router.replace("/login");
     }, 1800);
+  };
+
+  const handleProfilePress = () => {
+    setPrevTab(activeTab);
+    setTab("profile");
   };
 
   if (isLoggingOut)
