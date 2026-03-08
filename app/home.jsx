@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react";
-import {
-  ScrollView,
-  StatusBar,
-} from "react-native";
+import { useEffect, useState } from "react";
+import { ScrollView, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "../constants/useTheme";
-import { notifications } from "../constants/data";
-import { TopHeader } from "../components/layout/TopHeader";
-import { BottomTabBar } from "../components/layout/BottomTabBar";
-import { UnderMaintenance } from "../components/common/under-maintenance";
-import { DashboardTab } from "../components/Tabs/DashboardScreen";
 import LoadingScreen from "../components/common/LoadingScreen";
 import MyRiskDetail from "../components/common/students/StudentRiskDetail";
+import { UnderMaintenance } from "../components/common/under-maintenance";
+import { BottomTabBar } from "../components/layout/BottomTabBar";
+import { TopHeader } from "../components/layout/TopHeader";
+import { AttendanceTab } from "../components/Tabs/AttendanceScreen";
+import { DashboardTab } from "../components/Tabs/DashboardScreen";
+import { GradesTab } from "../components/Tabs/GradesScreen";
+import { NotificationsTab } from "../components/Tabs/NotificationsScreen";
+import { ScheduleTab } from "../components/Tabs/ScheduleScreen";
+import { notifications } from "../constants/data";
+import { useTheme } from "../constants/useTheme";
 
 export default function HomeScreen() {
   const { colors, isDarkMode } = useTheme();
   const [activeTab, setTab] = useState("home");
-  const [showEarlyWarning, setShowEarlyWarning] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const unreadCount = notifications.filter(n => n.unread).length;
+  const [unreadCount, setUnreadCount] = useState(
+    notifications.filter((n) => n.unread).length,
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 5000);
@@ -27,24 +29,50 @@ export default function HomeScreen() {
 
   const handleTabChange = (t) => {
     setTab(t);
-    setShowEarlyWarning(false);
+  };
+
+  // Called from NotificationsTab when user taps a routable notification
+  const handleNotifNavigate = (route) => {
+    setTab(route);
+    setUnreadCount((prev) => Math.max(0, prev - 1));
   };
 
   const renderContent = () => {
+    // Home tab
     if (activeTab === "home") {
-      if (showEarlyWarning) {
-        return <MyRiskDetail onBack={() => setShowEarlyWarning(false)} />;
-      }
       return (
         <DashboardTab
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
-          onRiskPress={() => setShowEarlyWarning(true)}
+          onRiskPress={() => setTab("alert")}
         />
       );
     }
+
+    // Alerts tab — Early Warning / Risk Detail (independent, unchanged)
+    if (activeTab === "alert") {
+      return <MyRiskDetail onBack={() => setTab("home")} />;
+    }
+
+    // Grades tab
+    if (activeTab === "grades") return <GradesTab />;
+
+    // Attendance tab
+    if (activeTab === "attend") return <AttendanceTab />;
+
+    // Notifications tab (replaces Messages)
+    if (activeTab === "notif") {
+      return <NotificationsTab onNavigate={handleNotifNavigate} />;
+    }
+
+    // Schedule tab
+    if (activeTab === "sched") return <ScheduleTab />;
+
     return <UnderMaintenance />;
   };
+
+  // NotificationsTab manages its own scroll internally
+  const needsScrollWrapper = activeTab !== "notif";
 
   if (isLoading) return <LoadingScreen message="Preparing your dashboard..." />;
 
@@ -52,10 +80,18 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
       <TopHeader />
-      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-        {renderContent()}
-      </ScrollView>
-      <BottomTabBar activeTab={activeTab} onTabChange={handleTabChange} unreadCount={unreadCount} />
+      {needsScrollWrapper ? (
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+          {renderContent()}
+        </ScrollView>
+      ) : (
+        <>{renderContent()}</>
+      )}
+      <BottomTabBar
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        unreadCount={unreadCount}
+      />
     </SafeAreaView>
   );
 }
