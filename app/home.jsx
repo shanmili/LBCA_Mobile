@@ -9,7 +9,7 @@ import { BottomTabBar } from "../components/layout/BottomTabBar";
 import { TopHeader } from "../components/layout/TopHeader";
 import { AttendanceTab } from "../components/Tabs/AttendanceScreen";
 import { DashboardTab } from "../components/Tabs/DashboardScreen";
-import { GradesTab } from "../components/Tabs/GradesScreen";
+import { GradesScreen } from "../components/Tabs/GradesScreen";
 import { NotificationsTab } from "../components/Tabs/NotificationsScreen";
 import { ProfileTab } from "../components/Tabs/ProfileScreen";
 import { ScheduleTab } from "../components/Tabs/ScheduleScreen";
@@ -23,6 +23,7 @@ function HomeScreenInner() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [prevTab, setPrevTab] = useState("home"); // for profile back button
+  const [showEarlyWarning, setShowEarlyWarning] = useState(false);
   const [unreadCount, setUnreadCount] = useState(
     notifications.filter((n) => n.unread).length,
   );
@@ -34,16 +35,7 @@ function HomeScreenInner() {
 
   const handleTabChange = (t) => {
     setTab(t);
-  };
-
-  const handleNotifNavigate = (route) => {
-    setTab(route);
-    setUnreadCount((prev) => Math.max(0, prev - 1));
-  };
-
-  const handleProfilePress = () => {
-    setPrevTab(activeTab);
-    setTab("profile");
+    setShowEarlyWarning(false);
   };
 
   const renderContent = () => {
@@ -52,38 +44,31 @@ function HomeScreenInner() {
         <DashboardTab
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
-          onRiskPress={() => setTab("alert")}
+          onRiskPress={() => setShowEarlyWarning(true)}
         />
       );
     }
 
-    if (activeTab === "alert") {
-      return <MyRiskDetail onBack={() => setTab("home")} />;
-    }
-
-    if (activeTab === "grades") return <GradesTab />;
-    if (activeTab === "attend") return <AttendanceTab />;
-    if (activeTab === "sched") return <ScheduleTab />;
-
-    if (activeTab === "notif") {
-      return <NotificationsTab onNavigate={handleNotifNavigate} />;
-    }
-
-    if (activeTab === "profile") {
-      return <ProfileTab onBack={() => setTab(prevTab)} />;
+    if (activeTab === "grades") {
+      return <GradesScreen />;
     }
 
     return <UnderMaintenance />;
   };
 
   // These tabs manage their own scroll internally
-  const selfScrolling = ["notif", "profile"].includes(activeTab);
+  const selfScrolling = ["notif", "profile", "grades"].includes(activeTab);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
     setTimeout(() => {
       router.replace("/login");
     }, 1800);
+  };
+
+  const handleProfilePress = () => {
+    setPrevTab(activeTab);
+    setTab("profile");
   };
 
   if (isLoggingOut)
