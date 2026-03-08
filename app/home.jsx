@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,13 +21,14 @@ function HomeScreenInner() {
   const { colors, isDarkMode } = useTheme();
   const [activeTab, setTab] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [prevTab, setPrevTab] = useState("home"); // for profile back button
   const [unreadCount, setUnreadCount] = useState(
     notifications.filter((n) => n.unread).length,
   );
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 5000);
+    const timer = setTimeout(() => setIsLoading(false), 1800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -77,12 +79,21 @@ function HomeScreenInner() {
   // These tabs manage their own scroll internally
   const selfScrolling = ["notif", "profile"].includes(activeTab);
 
+  const handleLogout = () => {
+    setIsLoggingOut(true);
+    setTimeout(() => {
+      router.replace("/login");
+    }, 1800);
+  };
+
+  if (isLoggingOut)
+    return <LoadingScreen message="See you soon!" variant="logout" />;
   if (isLoading) return <LoadingScreen message="Preparing your dashboard..." />;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <TopHeader onProfilePress={handleProfilePress} />
+      <TopHeader onProfilePress={handleProfilePress} onLogout={handleLogout} />
       {selfScrolling ? (
         <>{renderContent()}</>
       ) : (
