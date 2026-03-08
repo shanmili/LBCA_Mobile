@@ -26,9 +26,14 @@ export default function HomeScreen() {
   }, []);
 
   const handleTabChange = (t) => {
-    setTab(t);
-    setShowEarlyWarning(false);
-  };
+  if (t === "notif") {
+    setTab("notif");
+    setShowEarlyWarning(true);
+    return;
+  }
+  setTab(t);
+  setShowEarlyWarning(false);
+};
 
   const renderContent = () => {
     if (activeTab === "home") {
@@ -38,13 +43,20 @@ export default function HomeScreen() {
       return (
         <DashboardTab
           unreadCount={unreadCount}
-          onNotifPress={() => setTab("notif")}
+          onNotifPress={() => { setTab("notif"); setShowEarlyWarning(true); }}
           onRiskPress={() => setShowEarlyWarning(true)}
         />
       );
     }
-    return <UnderMaintenance />;
-  };
+
+      // Show risk detail when Alerts tab is active
+  if (activeTab === "notif" && showEarlyWarning) {
+    return <MyRiskDetail onBack={() => { setShowEarlyWarning(false); setTab("home"); }} />;
+  }
+
+  return <UnderMaintenance />;
+};
+
 
   if (isLoading) return <LoadingScreen message="Preparing your dashboard..." />;
 
