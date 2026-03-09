@@ -9,7 +9,7 @@ export function ScheduleTab() {
   const [activeDay, setActiveDay] = useState(0);
 
   return (
-    <View style={styles.pagePad}>
+    <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.pagePad} showsVerticalScrollIndicator={false}>
       <View style={{ marginBottom: 20 }}>
         <Text style={styles.h1}>Schedule</Text>
         <Text style={styles.p}>Grade 8 – Section A</Text>
@@ -130,6 +130,6 @@ export function ScheduleTab() {
           </View>
         );
       })}
-    </View>
+    </ScrollView>
   );
 }

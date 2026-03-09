@@ -63,6 +63,11 @@ function HomeScreenInner() {
       return <NotificationsTab onNavigate={(r) => setTab(r)} />;
     }
 
+    // Attendance tab
+    if (activeTab === "attend") {
+      return <AttendanceTab />;
+    }
+
     // Schedule tab
     if (activeTab === "sched") {
       return <ScheduleTab />;
@@ -82,7 +87,7 @@ function HomeScreenInner() {
   };
 
   // These tabs manage their own scroll internally
-  const selfScrolling = ["notif", "alert", "profile", "grades", "sched"].includes(activeTab);
+  const selfScrolling = ["notif", "alert", "profile", "grades", "sched", "attend"].includes(activeTab);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
