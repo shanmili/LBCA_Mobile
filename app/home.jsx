@@ -17,6 +17,8 @@ import { notifications } from "../constants/data";
 import { ProfileProvider } from "../constants/ProfileContext";
 import { useTheme } from "../constants/useTheme";
 
+//agfsghafshgq
+
 function HomeScreenInner() {
   const { colors, isDarkMode } = useTheme();
   const [activeTab, setTab] = useState("home");
