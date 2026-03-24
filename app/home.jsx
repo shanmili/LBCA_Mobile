@@ -7,7 +7,6 @@ import MyRiskDetail from "../components/common/students/StudentRiskDetail";
 import { UnderMaintenance } from "../components/common/under-maintenance";
 import { BottomTabBar } from "../components/layout/BottomTabBar";
 import { TopHeader } from "../components/layout/TopHeader";
-import { AttendanceTab } from "../components/Tabs/AttendanceScreen";
 import { DashboardTab } from "../components/Tabs/DashboardScreen";
 import { GradesScreen } from "../components/Tabs/GradesScreen";
 import { NotificationsTab } from "../components/Tabs/NotificationsScreen";
@@ -63,11 +62,6 @@ function HomeScreenInner() {
       return <NotificationsTab onNavigate={(r) => setTab(r)} />;
     }
 
-    // Attendance tab
-    if (activeTab === "attend") {
-      return <AttendanceTab />;
-    }
-
     // Schedule tab
     if (activeTab === "sched") {
       return <ScheduleTab />;
@@ -87,7 +81,7 @@ function HomeScreenInner() {
   };
 
   // These tabs manage their own scroll internally
-  const selfScrolling = ["notif", "alert", "profile", "grades", "sched", "attend"].includes(activeTab);
+  const selfScrolling = ["notif", "alert", "profile", "grades", "sched"].includes(activeTab);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
