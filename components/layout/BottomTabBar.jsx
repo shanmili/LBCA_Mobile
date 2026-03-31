@@ -5,7 +5,6 @@ import { useTheme } from "../../constants/useTheme";
 const tabs = [
   { key: "home", icon: "grid", label: "Home" },
   { key: "grades", icon: "bar-chart", label: "Grades" },
-  { key: "attend", icon: "calendar", label: "Attendance" },
   { key: "alert", icon: "alert-circle", label: "Alerts" },
   { key: "notif", icon: "notifications", label: "Notifications" },
   { key: "sched", icon: "time", label: "Schedule" },
@@ -19,8 +18,8 @@ export function BottomTabBar({ activeTab, onTabChange, unreadCount = 0 }) {
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        paddingVertical: 12,
-        paddingBottom: Platform.OS === "ios" ? 24 : 12,
+        paddingVertical: 8,
+        paddingBottom: Platform.OS === "ios" ? 24 : 8,
         borderTopWidth: 1,
         borderColor: colors.border,
         backgroundColor: colors.card,
@@ -30,12 +29,12 @@ export function BottomTabBar({ activeTab, onTabChange, unreadCount = 0 }) {
         <TouchableOpacity
           key={t.key}
           onPress={() => onTabChange(t.key)}
-          style={{ alignItems: "center", padding: 8 }}
+          style={{ alignItems: "center", flex: 1, paddingVertical: 4 }}
         >
           <View>
             <Ionicons
               name={activeTab === t.key ? t.icon : `${t.icon}-outline`}
-              size={22}
+              size={20}
               color={activeTab === t.key ? colors.accent : colors.muted}
               style={{ opacity: activeTab === t.key ? 1 : 0.6 }}
             />
@@ -63,10 +62,10 @@ export function BottomTabBar({ activeTab, onTabChange, unreadCount = 0 }) {
           </View>
           <Text
             style={{
-              fontSize: 10,
+              fontSize: 9,
               fontWeight: "600",
               color: activeTab === t.key ? colors.accent : colors.muted,
-              marginTop: 4,
+              marginTop: 2,
             }}
           >
             {t.label}
