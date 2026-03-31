@@ -45,7 +45,7 @@ const MyRiskDetail = ({ onBack }) => {
         : colors.red;
 
   return (
-    <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }} showsVerticalScrollIndicator={false}>
+    <View style={{ padding: 16 }}>
       {/* Back */}
       <TouchableOpacity
         onPress={onBack}
@@ -240,11 +240,11 @@ const MyRiskDetail = ({ onBack }) => {
             >
               <Ionicons
                 name={trendIconNames[s.trend]}
-                size={14}
+                size={13}
                 color={trendColor}
               />
               <Text
-                style={{ fontSize: 14, fontWeight: "800", color: trendColor }}
+                style={{ fontSize: 13, fontWeight: "800", color: trendColor }}
               >
                 {s.trend}
               </Text>

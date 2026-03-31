@@ -7,15 +7,16 @@ import MyRiskDetail from "../components/common/students/StudentRiskDetail";
 import { UnderMaintenance } from "../components/common/under-maintenance";
 import { BottomTabBar } from "../components/layout/BottomTabBar";
 import { TopHeader } from "../components/layout/TopHeader";
-import { AttendanceTab } from "../components/Tabs/AttendanceScreen";
 import { DashboardTab } from "../components/Tabs/DashboardScreen";
-import { GradesTab } from "../components/Tabs/GradesScreen";
+import { GradesScreen } from "../components/Tabs/GradesScreen";
 import { NotificationsTab } from "../components/Tabs/NotificationsScreen";
 import { ProfileTab } from "../components/Tabs/ProfileScreen";
 import { ScheduleTab } from "../components/Tabs/ScheduleScreen";
-import { notifications, earlyWarningStudents } from "../constants/data";
+import { earlyWarningStudents, notifications } from "../constants/data";
 import { ProfileProvider } from "../constants/ProfileContext";
 import { useTheme } from "../constants/useTheme";
+
+//agfsghafshgq
 
 function HomeScreenInner() {
   const { colors, isDarkMode } = useTheme();
@@ -69,7 +70,26 @@ function HomeScreenInner() {
         <DashboardTab
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
-          onRiskPress={() => { setTab("alert"); setShowEarlyWarning(true); }}
+          onRiskPress={() => {
+            setTab("alert");
+            setShowEarlyWarning(true);
+          }}
+        />
+      );
+    }
+
+    if (activeTab === "grades") {
+      return <GradesScreen />;
+    }
+
+    // Alerts tab or Low Risk card → risk detail
+    if (activeTab === "alert") {
+      return (
+        <MyRiskDetail
+          onBack={() => {
+            setShowEarlyWarning(false);
+            setTab("home");
+          }}
         />
       );
     }
@@ -79,16 +99,28 @@ function HomeScreenInner() {
       return <NotificationsTab onNavigate={(r) => setTab(r)} />;
     }
 
-    // Alerts tab or Low Risk card → risk detail
-    if (activeTab === "alert") {
-      return <MyRiskDetail onBack={() => { setShowEarlyWarning(false); setTab("home"); }} />;
+    // Schedule tab
+    if (activeTab === "sched") {
+      return <ScheduleTab />;
     }
 
+    // Profile tab
+    if (activeTab === "profile") {
+      return (
+        <ProfileTab onBack={() => setTab(prevTab)} onLogout={handleLogout} />
+      );
+    }
     return <UnderMaintenance />;
   };
 
   // These tabs manage their own scroll internally
-  const selfScrolling = ["notif", "alert", "profile"].includes(activeTab);
+  const selfScrolling = [
+    "notif",
+    "alert",
+    "profile",
+    "grades",
+    "sched",
+  ].includes(activeTab);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
