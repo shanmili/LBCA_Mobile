@@ -244,7 +244,11 @@ const MyRiskDetail = ({ onBack }) => {
                 color={trendColor}
               />
               <Text
-                style={{ fontSize: 13, fontWeight: "800", color: trendColor }}
+                style={{
+                  fontSize: s.trend === "improving" ? 10 : 14,
+                  fontWeight: "800",
+                  color: trendColor,
+                }}
               >
                 {s.trend}
               </Text>
