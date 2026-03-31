@@ -7,7 +7,6 @@ import MyRiskDetail from "../components/common/students/StudentRiskDetail";
 import { UnderMaintenance } from "../components/common/under-maintenance";
 import { BottomTabBar } from "../components/layout/BottomTabBar";
 import { TopHeader } from "../components/layout/TopHeader";
-import { AttendanceTab } from "../components/Tabs/AttendanceScreen";
 import { DashboardTab } from "../components/Tabs/DashboardScreen";
 import { GradesScreen } from "../components/Tabs/GradesScreen";
 import { NotificationsTab } from "../components/Tabs/NotificationsScreen";
@@ -44,7 +43,7 @@ function HomeScreenInner() {
         <DashboardTab
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
-          onRiskPress={() => setShowEarlyWarning(true)}
+          onRiskPress={() => { setTab("alert"); setShowEarlyWarning(true); }}
         />
       );
     }
@@ -53,11 +52,35 @@ function HomeScreenInner() {
       return <GradesScreen />;
     }
 
+    // Alerts tab or Low Risk card → risk detail
+    if (activeTab === "alert") {
+      return <MyRiskDetail onBack={() => { setShowEarlyWarning(false); setTab("home"); }} />;
+    }
+
+    // Notification bell → notifications list
+    if (activeTab === "notif") {
+      return <NotificationsTab onNavigate={(r) => setTab(r)} />;
+    }
+
+    // Schedule tab
+    if (activeTab === "sched") {
+      return <ScheduleTab />;
+    }
+
+    // Profile tab
+    if (activeTab === "profile") {
+      return (
+        <ProfileTab
+          onBack={() => setTab(prevTab)}
+          onLogout={handleLogout}
+        />
+      );
+    }
     return <UnderMaintenance />;
   };
 
   // These tabs manage their own scroll internally
-  const selfScrolling = ["notif", "profile", "grades"].includes(activeTab);
+  const selfScrolling = ["notif", "profile"].includes(activeTab);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
