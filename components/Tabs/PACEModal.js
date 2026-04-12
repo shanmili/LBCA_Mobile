@@ -1,4 +1,3 @@
-
 import { Ionicons } from "@expo/vector-icons";
 import { Modal, View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useTheme } from "../../constants/useTheme";
