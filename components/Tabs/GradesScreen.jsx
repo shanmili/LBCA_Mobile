@@ -1,15 +1,16 @@
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { COLORS } from "../../constants/colors";
 import { getGradeColor, gradesData, subjectColors } from "../../constants/data";
-import { pill, pillText, styles } from "../../constants/styles";
+import { pill, pillText } from "../../constants/styles";
+import { useTheme } from "../../constants/useTheme";
 
 export function GradesTab() {
+  const { colors } = useTheme();
   return (
-    <View style={styles.pagePad}>
+    <View style={{ padding: 20 }}>
       <View style={{ marginBottom: 20 }}>
-        <Text style={styles.h1}>Grades</Text>
-        <Text style={styles.p}>School Year 2025–2026</Text>
+        <Text style={{ fontSize: 22, fontWeight: "800", color: colors.text, marginBottom: 4 }}>Grades</Text>
+        <Text style={{ color: colors.muted, fontSize: 13 }}>School Year 2025–2026</Text>
       </View>
       <ScrollView
         horizontal
@@ -23,9 +24,9 @@ export function GradesTab() {
               paddingVertical: 8,
               paddingHorizontal: 18,
               borderRadius: 100,
-              backgroundColor: i === 2 ? COLORS.accent : COLORS.card,
+              backgroundColor: i === 2 ? colors.accent : colors.card,
               borderWidth: 1,
-              borderColor: i === 2 ? COLORS.accent : COLORS.border,
+              borderColor: i === 2 ? colors.accent : colors.border,
               marginRight: 8,
               flexDirection: "row",
               alignItems: "center",
@@ -34,7 +35,7 @@ export function GradesTab() {
           >
             <Text
               style={{
-                color: i === 2 ? "#0F172A" : COLORS.muted,
+                color: i === 2 ? colors.bg : colors.muted,
                 fontSize: 13,
                 fontWeight: "700",
               }}
@@ -42,14 +43,14 @@ export function GradesTab() {
               {q}
             </Text>
             {i === 3 && (
-              <Ionicons name="lock-closed" size={11} color={COLORS.muted} />
+              <Ionicons name="lock-closed" size={11} color={colors.muted} />
             )}
           </TouchableOpacity>
         ))}
       </ScrollView>
       {gradesData.map((s, idx) => {
         const q = s.q3;
-        const color = subjectColors[s.subject] || COLORS.accent;
+        const color = subjectColors[s.subject] || colors.accent;
         const subjectIcons = [
           "calculator",
           "book",
@@ -61,10 +62,16 @@ export function GradesTab() {
         return (
           <View
             key={s.subject}
-            style={[
-              styles.card,
-              { marginBottom: 10, flexDirection: "row", alignItems: "center" },
-            ]}
+            style={{
+              backgroundColor: colors.card,
+              borderRadius: 20,
+              padding: 20,
+              borderWidth: 1,
+              borderColor: colors.border,
+              marginBottom: 10,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
           >
             <View
               style={{
@@ -81,11 +88,11 @@ export function GradesTab() {
             </View>
             <View style={{ flex: 1 }}>
               <Text
-                style={{ fontSize: 14, fontWeight: "700", color: COLORS.text }}
+                style={{ fontSize: 14, fontWeight: "700", color: colors.text }}
               >
                 {s.subject}
               </Text>
-              <Text style={{ fontSize: 12, color: COLORS.muted, marginTop: 2 }}>
+              <Text style={{ fontSize: 12, color: colors.muted, marginTop: 2 }}>
                 {s.teacher}
               </Text>
             </View>

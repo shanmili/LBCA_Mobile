@@ -1,9 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { COLORS } from "../../constants/colors";
 import { notifications } from "../../constants/data";
-import { pill, pillText, styles } from "../../constants/styles";
+import { pill, pillText } from "../../constants/styles";
+import { useTheme } from "../../constants/useTheme";
 
 const TYPE_CONFIG = {
   grade: { color: "#38BDF8", label: "Grade" },
@@ -13,6 +13,7 @@ const TYPE_CONFIG = {
 };
 
 export function NotificationsTab({ onNavigate, items: initialItems }) {
+  const { colors } = useTheme();
   const [items, setItems] = useState(initialItems || notifications);
   const unreadCount = items.filter((n) => n.unread).length;
 
@@ -30,7 +31,7 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.pagePad}>
+      <View style={{ padding: 20 }}>
         {/* Header */}
         <View
           style={{
@@ -41,14 +42,14 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
           }}
         >
           <View>
-            <Text style={styles.h1}>Notifications</Text>
-            <Text style={styles.p}>
+            <Text style={{ fontSize: 22, fontWeight: "800", color: colors.text, marginBottom: 4 }}>Notifications</Text>
+            <Text style={{ color: colors.muted, fontSize: 13 }}>
               {unreadCount > 0 ? `${unreadCount} unread` : "All caught up!"}
             </Text>
           </View>
           {unreadCount > 0 && (
-            <TouchableOpacity onPress={markAllRead} style={pill(COLORS.accent)}>
-              <Text style={pillText(COLORS.accent)}>Mark all read</Text>
+            <TouchableOpacity onPress={markAllRead} style={pill(colors.accent)}>
+              <Text style={pillText(colors.accent)}>Mark all read</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -63,17 +64,19 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
               key={n.id}
               onPress={() => handlePress(n)}
               activeOpacity={0.75}
-              style={[
-                styles.card,
-                {
-                  marginBottom: 10,
-                  flexDirection: "row",
-                  alignItems: "flex-start",
-                  backgroundColor: n.unread ? COLORS.cardLight : COLORS.card,
-                  borderLeftWidth: 3,
-                  borderLeftColor: n.unread ? config.color : "transparent",
-                },
-              ]}
+              style={{
+                backgroundColor: colors.card,
+                borderRadius: 20,
+                padding: 20,
+                borderWidth: 1,
+                borderColor: colors.border,
+                marginBottom: 10,
+                flexDirection: "row",
+                alignItems: "flex-start",
+                backgroundColor: n.unread ? colors.cardLight : colors.card,
+                borderLeftWidth: 3,
+                borderLeftColor: n.unread ? config.color : "transparent",
+              }}
             >
               {/* Icon */}
               <View
@@ -128,7 +131,7 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
                         width: 7,
                         height: 7,
                         borderRadius: 4,
-                        backgroundColor: COLORS.accent,
+                        backgroundColor: colors.accent,
                       }}
                     />
                   )}
@@ -138,7 +141,7 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
                   style={{
                     fontSize: 14,
                     fontWeight: "700",
-                    color: COLORS.text,
+                    color: colors.text,
                     marginBottom: 4,
                   }}
                 >
@@ -147,7 +150,7 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
                 <Text
                   style={{
                     fontSize: 13,
-                    color: COLORS.muted,
+                    color: colors.muted,
                     lineHeight: 18,
                     marginBottom: 8,
                   }}
@@ -165,7 +168,7 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
                   <Text
                     style={{
                       fontSize: 11,
-                      color: COLORS.muted,
+                      color: colors.muted,
                       fontWeight: "600",
                     }}
                   >
@@ -182,7 +185,7 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
                       <Text
                         style={{
                           fontSize: 11,
-                          color: COLORS.accent,
+                          color: colors.accent,
                           fontWeight: "700",
                         }}
                       >
@@ -191,7 +194,7 @@ export function NotificationsTab({ onNavigate, items: initialItems }) {
                       <Ionicons
                         name="chevron-forward"
                         size={12}
-                        color={COLORS.accent}
+                        color={colors.accent}
                       />
                     </View>
                   )}
