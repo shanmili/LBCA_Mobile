@@ -16,6 +16,8 @@ import { ScheduleTab } from "../components/Tabs/ScheduleScreen";
 import { notifications } from "../constants/data";
 import { ProfileProvider } from "../constants/ProfileContext";
 import { useTheme } from "../constants/useTheme";
+import { getAuthSession } from "../services/authToken";
+import { getLoggedParentStudentInfo, signOut } from "../services/authService";
 
 
 function HomeScreenInner() {
@@ -23,6 +25,8 @@ function HomeScreenInner() {
   const [activeTab, setTab] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [loggedStudentId, setLoggedStudentId] = useState(null);
+  const [parentStudentInfo, setParentStudentInfo] = useState(null);
   const [prevTab, setPrevTab] = useState("home"); // for profile back button
   const [unreadCount, setUnreadCount] = useState(
     notifications.filter((n) => n.unread).length,
@@ -31,6 +35,37 @@ function HomeScreenInner() {
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1800);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadSession = async () => {
+      const session = await getAuthSession();
+      if (!mounted || !session) return;
+      if (session.role === "parent") {
+        try {
+          const parentStudentInfo = await getLoggedParentStudentInfo();
+          if (mounted && parentStudentInfo?.student_id) {
+            setLoggedStudentId(parentStudentInfo.student_id);
+            setParentStudentInfo(parentStudentInfo);
+            return;
+          }
+        } catch {
+          // fall back to any student id already stored during login
+        }
+
+        if (session.studentId) {
+          setLoggedStudentId(session.studentId);
+        }
+      }
+    };
+
+    loadSession();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const handleTabChange = (t) => {
@@ -54,12 +89,41 @@ function HomeScreenInner() {
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
           onRiskPress={() => setTab("alert")}
+          studentName={
+            parentStudentInfo
+              ? `${parentStudentInfo.first_name || ""} ${parentStudentInfo.last_name || ""}`.trim()
+              : null
+          }
+          studentMeta={
+            parentStudentInfo && (parentStudentInfo.grade_level || parentStudentInfo.section)
+              ? `${parentStudentInfo.grade_level || ""}${
+                  parentStudentInfo.grade_level && parentStudentInfo.section ? " - " : ""
+                }${parentStudentInfo.section || ""}`
+              : null
+          }
         />
       );
     }
 
     if (activeTab === "alert") {
-      return <MyRiskDetail onBack={() => setTab("home")} />;
+      return (
+        <MyRiskDetail
+          onBack={() => setTab("home")}
+          studentId={loggedStudentId}
+          baseStudent={
+            parentStudentInfo
+              ? {
+                  id: parentStudentInfo.student_id,
+                  firstName: parentStudentInfo.first_name,
+                  middleName: parentStudentInfo.middle_name,
+                  lastName: parentStudentInfo.last_name,
+                  gradeLevel: parentStudentInfo.grade_level,
+                  section: parentStudentInfo.section,
+                }
+              : null
+          }
+        />
+      );
     }
 
     if (activeTab === "grades") return <GradesScreen />;
@@ -80,8 +144,9 @@ function HomeScreenInner() {
   // These tabs manage their own scroll internally
   const selfScrolling = ["notif", "profile", "grades"].includes(activeTab);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setIsLoggingOut(true);
+    await signOut();
     setTimeout(() => {
       router.replace("/login");
     }, 1800);

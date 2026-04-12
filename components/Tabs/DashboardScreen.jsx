@@ -6,9 +6,10 @@ import { useTheme } from "../../constants/useTheme";
 import { StatCard } from "../common/dashboard/StatCard";
 import { SubjectProgress } from "../common/dashboard/SubjectProgress";
 
-export function DashboardTab({ unreadCount, onNotifPress, onRiskPress }) {
+export function DashboardTab({ unreadCount, onNotifPress, onRiskPress, studentName, studentMeta }) {
   const { colors } = useTheme();
   const styles = getStyles(colors);
+  const displayName = studentName || "";
   return (
     <View style={styles.pagePad}>
       <View
@@ -23,10 +24,12 @@ export function DashboardTab({ unreadCount, onNotifPress, onRiskPress }) {
             Good morning{" "}
             <Ionicons name="hand-right" size={14} color={colors.muted} />
           </Text>
-          <Text style={styles.h1}>Maria Santos</Text>
-          <View style={[pill(colors.green), { marginTop: 6 }]}>
-            <Text style={pillText(colors.green)}>● Grade 8 – Section A</Text>
-          </View>
+          <Text style={styles.h1}>{displayName}</Text>
+          {!!studentMeta && (
+            <View style={[pill(colors.green), { marginTop: 6 }]}>
+              <Text style={pillText(colors.green)}>{`● ${studentMeta}`}</Text>
+            </View>
+          )}
         </View>
         <TouchableOpacity onPress={onNotifPress}>
           <View style={avatar()}>
