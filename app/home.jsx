@@ -24,7 +24,6 @@ function HomeScreenInner() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [prevTab, setPrevTab] = useState("home"); // for profile back button
-  const [showEarlyWarning, setShowEarlyWarning] = useState(false);
   const [unreadCount, setUnreadCount] = useState(
     notifications.filter((n) => n.unread).length,
   );
@@ -36,7 +35,16 @@ function HomeScreenInner() {
 
   const handleTabChange = (t) => {
     setTab(t);
-    setShowEarlyWarning(false);
+  };
+
+  const handleNotifNavigate = (route) => {
+    setTab(route);
+    setUnreadCount((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleProfilePress = () => {
+    setPrevTab(activeTab);
+    setTab("profile");
   };
 
   const renderContent = () => {
@@ -49,6 +57,23 @@ function HomeScreenInner() {
         />
       );
     }
+
+    if (activeTab === "alert") {
+      return <MyRiskDetail onBack={() => setTab("home")} />;
+    }
+
+    if (activeTab === "grades") return <GradesTab />;
+    if (activeTab === "attend") return <AttendanceTab />;
+    if (activeTab === "sched") return <ScheduleTab />;
+
+    if (activeTab === "notif") {
+      return <NotificationsTab onNavigate={handleNotifNavigate} />;
+    }
+
+    if (activeTab === "profile") {
+      return <ProfileTab onBack={() => setTab(prevTab)} />;
+    }
+
     return <UnderMaintenance />;
   };
 
@@ -60,11 +85,6 @@ function HomeScreenInner() {
     setTimeout(() => {
       router.replace("/login");
     }, 1800);
-  };
-
-  const handleProfilePress = () => {
-    setPrevTab(activeTab);
-    setTab("profile");
   };
 
   if (isLoggingOut)
