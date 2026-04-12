@@ -1,18 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { COLORS } from "../../constants/colors";
 import { schedule, subjectColors } from "../../constants/data";
-import { pill, pillText, styles } from "../../constants/styles";
+import { pill, pillText } from "../../constants/styles";
+import { useTheme } from "../../constants/useTheme";
 
 export function ScheduleTab() {
+  const { colors } = useTheme();
   const [activeDay, setActiveDay] = useState(0);
 
   return (
-    <View style={styles.pagePad}>
+    <View style={{ padding: 20 }}>
       <View style={{ marginBottom: 20 }}>
-        <Text style={styles.h1}>Schedule</Text>
-        <Text style={styles.p}>Grade 8 – Section A</Text>
+        <Text style={{ fontSize: 22, fontWeight: "800", color: colors.text, marginBottom: 4 }}>Schedule</Text>
+        <Text style={{ color: colors.muted, fontSize: 13 }}>Grade 8 – Section A</Text>
       </View>
       <ScrollView
         horizontal
@@ -27,15 +28,15 @@ export function ScheduleTab() {
               paddingVertical: 8,
               paddingHorizontal: 18,
               borderRadius: 100,
-              backgroundColor: activeDay === i ? COLORS.accent : COLORS.card,
+              backgroundColor: activeDay === i ? colors.accent : colors.card,
               borderWidth: 1,
-              borderColor: activeDay === i ? COLORS.accent : COLORS.border,
+              borderColor: activeDay === i ? colors.accent : colors.border,
               marginRight: 8,
             }}
           >
             <Text
               style={{
-                color: activeDay === i ? "#0F172A" : COLORS.muted,
+                color: activeDay === i ? colors.bg : colors.muted,
                 fontSize: 13,
                 fontWeight: "700",
               }}
@@ -46,7 +47,7 @@ export function ScheduleTab() {
         ))}
       </ScrollView>
       {schedule[activeDay].periods.map((p, i) => {
-        const color = subjectColors[p.subject] || COLORS.accent;
+        const color = subjectColors[p.subject] || colors.accent;
         const isNow = i === 1;
         return (
           <View key={i} style={{ flexDirection: "row", marginBottom: 12 }}>
@@ -62,7 +63,7 @@ export function ScheduleTab() {
                 style={{
                   fontSize: 12,
                   fontWeight: "700",
-                  color: isNow ? COLORS.accent : COLORS.muted,
+                  color: isNow ? colors.accent : colors.muted,
                 }}
               >
                 {p.time}
@@ -79,15 +80,15 @@ export function ScheduleTab() {
             <View
               style={{
                 flex: 1,
-                backgroundColor: isNow ? `${color}22` : COLORS.card,
+                backgroundColor: isNow ? `${color}22` : colors.card,
                 borderWidth: 1,
-                borderColor: isNow ? color : COLORS.border,
+                borderColor: isNow ? color : colors.border,
                 borderRadius: 16,
                 padding: 14,
               }}
             >
               <Text
-                style={{ fontSize: 14, fontWeight: "700", color: COLORS.text }}
+                style={{ fontSize: 14, fontWeight: "700", color: colors.text }}
               >
                 {p.subject}
               </Text>
@@ -102,10 +103,10 @@ export function ScheduleTab() {
                   <Ionicons
                     name="location-outline"
                     size={12}
-                    color={COLORS.muted}
+                    color={colors.muted}
                     style={{ marginRight: 3 }}
                   />
-                  <Text style={{ fontSize: 12, color: COLORS.muted }}>
+                  <Text style={{ fontSize: 12, color: colors.muted }}>
                     {p.room}
                   </Text>
                 </View>
@@ -113,10 +114,10 @@ export function ScheduleTab() {
                   <Ionicons
                     name="person-outline"
                     size={12}
-                    color={COLORS.muted}
+                    color={colors.muted}
                     style={{ marginRight: 3 }}
                   />
-                  <Text style={{ fontSize: 12, color: COLORS.muted }}>
+                  <Text style={{ fontSize: 12, color: colors.muted }}>
                     {p.teacher}
                   </Text>
                 </View>

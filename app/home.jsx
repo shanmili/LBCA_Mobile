@@ -17,6 +17,7 @@ import { notifications } from "../constants/data";
 import { ProfileProvider } from "../constants/ProfileContext";
 import { useTheme } from "../constants/useTheme";
 
+
 function HomeScreenInner() {
   const { colors, isDarkMode } = useTheme();
   const [activeTab, setTab] = useState("home");
@@ -52,7 +53,7 @@ function HomeScreenInner() {
         <DashboardTab
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
-          onRiskPress={() => setTab("alert")}
+          onRiskPress={() => setShowEarlyWarning(true)}
         />
       );
     }

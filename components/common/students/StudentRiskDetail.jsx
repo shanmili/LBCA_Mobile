@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { currentStudent, subjectColors } from "../../../constants/data";
 import { useTheme } from "../../../constants/useTheme";
 
@@ -45,7 +45,11 @@ const MyRiskDetail = ({ onBack }) => {
         : colors.red;
 
   return (
-    <View style={{ padding: 16 }}>
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ padding: 16 }}
+      showsVerticalScrollIndicator={false}
+    >
       {/* Back */}
       <TouchableOpacity
         onPress={onBack}
@@ -240,11 +244,11 @@ const MyRiskDetail = ({ onBack }) => {
             >
               <Ionicons
                 name={trendIconNames[s.trend]}
-                size={14}
+                size={13}
                 color={trendColor}
               />
               <Text
-                style={{ fontSize: 14, fontWeight: "800", color: trendColor }}
+                style={{ fontSize: 13, fontWeight: "800", color: trendColor }}
               >
                 {s.trend}
               </Text>
@@ -451,7 +455,7 @@ const MyRiskDetail = ({ onBack }) => {
           );
         })}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
