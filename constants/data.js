@@ -182,6 +182,57 @@ export const getGradeColor = (g) =>
         ? COLORS.amber
         : COLORS.red;
 
+export const teacherAvailability = [
+  {
+    name: "Mr. Reyes",
+    subject: "Mathematics",
+    avatar: "MR",
+    color: "#38BDF8",
+    consultHours: "7:30 – 8:30 AM",
+    availability: { Mon: true, Tue: true, Wed: false, Thu: true, Fri: true },
+  },
+  {
+    name: "Ms. Lim",
+    subject: "English",
+    avatar: "ML",
+    color: "#34D399",
+    consultHours: "10:00 – 11:00 AM",
+    availability: { Mon: true, Tue: false, Wed: true, Thu: true, Fri: true },
+  },
+  {
+    name: "Mr. Cruz",
+    subject: "Science",
+    avatar: "MC",
+    color: "#A78BFA",
+    consultHours: "1:00 – 2:00 PM",
+    availability: { Mon: false, Tue: true, Wed: true, Thu: true, Fri: true },
+  },
+  {
+    name: "Ms. Dela Rosa",
+    subject: "Filipino",
+    avatar: "DR",
+    color: "#FBBF24",
+    consultHours: "9:00 – 10:00 AM",
+    availability: { Mon: true, Tue: true, Wed: true, Thu: false, Fri: true },
+  },
+  {
+    name: "Mr. Aquino",
+    subject: "Araling Panlipunan",
+    avatar: "MA",
+    color: "#F87171",
+    consultHours: "2:00 – 3:00 PM",
+    availability: { Mon: true, Tue: true, Wed: true, Thu: true, Fri: false },
+  },
+  {
+    name: "Ms. Bautista",
+    subject: "MAPEH",
+    avatar: "MB",
+    color: "#FB923C",
+    consultHours: "8:30 – 9:30 AM",
+    availability: { Mon: false, Tue: true, Wed: true, Thu: true, Fri: true },
+  },
+];
+
 // ── Current Student (logged-in parent's child) ──────────────
 export const currentStudent = {
   id: 100,
