@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { currentStudent, subjectColors } from "../../../constants/data";
 import { useTheme } from "../../../constants/useTheme";
 
