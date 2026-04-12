@@ -53,20 +53,16 @@ function HomeScreenInner() {
         <DashboardTab
           unreadCount={unreadCount}
           onNotifPress={() => setTab("notif")}
-          onRiskPress={() => setShowEarlyWarning(true)}
+          onRiskPress={() => setTab("alert")}
         />
       );
     }
 
-<<<<<<< HEAD
-    if (activeTab === "grades") {
-      return <GradesScreen />;
-=======
     if (activeTab === "alert") {
       return <MyRiskDetail onBack={() => setTab("home")} />;
     }
 
-    if (activeTab === "grades") return <GradesTab />;
+    if (activeTab === "grades") return <GradesScreen />;
     if (activeTab === "attend") return <AttendanceTab />;
     if (activeTab === "sched") return <ScheduleTab />;
 
@@ -76,7 +72,6 @@ function HomeScreenInner() {
 
     if (activeTab === "profile") {
       return <ProfileTab onBack={() => setTab(prevTab)} />;
->>>>>>> main
     }
 
     return <UnderMaintenance />;
