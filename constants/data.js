@@ -134,50 +134,32 @@ export const schedule = [
   {
     day: "Mon",
     periods: [
-      { time: "7:30 – 8:30 AM", subject: "Mathematics", room: "Room 203", teacher: "Mr. Reyes" },
-      { time: "8:30 – 9:30 AM", subject: "English", room: "Room 105", teacher: "Ms. Lim" },
-      { time: "9:30 – 10:30 AM", subject: "Science", room: "Lab 1", teacher: "Mr. Cruz" },
-      { time: "10:30 – 11:30 AM", subject: "MAPEH", room: "Gym", teacher: "Ms. Bautista" },
-      { time: "1:00 – 2:00 PM", subject: "Filipino", room: "Room 201", teacher: "Ms. Dela Rosa" },
+      {
+        time: "7:30",
+        subject: "Mathematics",
+        room: "203",
+        teacher: "Mr. Reyes",
+      },
+      { time: "8:30", subject: "English", room: "105", teacher: "Ms. Lim" },
+      { time: "9:30", subject: "Science", room: "Lab 1", teacher: "Mr. Cruz" },
     ],
   },
   {
     day: "Tue",
     periods: [
-      { time: "7:30 – 8:30 AM", subject: "English", room: "Room 105", teacher: "Ms. Lim" },
-      { time: "8:30 – 9:30 AM", subject: "Mathematics", room: "Room 203", teacher: "Mr. Reyes" },
-      { time: "9:30 – 10:30 AM", subject: "Filipino", room: "Room 201", teacher: "Ms. Dela Rosa" },
-      { time: "10:30 – 11:30 AM", subject: "Araling Panlipunan", room: "Room 302", teacher: "Mr. Aquino" },
-      { time: "1:00 – 2:00 PM", subject: "Science", room: "Lab 1", teacher: "Mr. Cruz" },
-    ],
-  },
-  {
-    day: "Wed",
-    periods: [
-      { time: "7:30 – 8:30 AM", subject: "Filipino", room: "Room 201", teacher: "Ms. Dela Rosa" },
-      { time: "8:30 – 9:30 AM", subject: "Science", room: "Lab 1", teacher: "Mr. Cruz" },
-      { time: "9:30 – 10:30 AM", subject: "Mathematics", room: "Room 203", teacher: "Mr. Reyes" },
-      { time: "1:00 – 2:00 PM", subject: "MAPEH", room: "Gym", teacher: "Ms. Bautista" },
-    ],
-  },
-  {
-    day: "Thu",
-    periods: [
-      { time: "7:30 – 8:30 AM", subject: "Araling Panlipunan", room: "Room 302", teacher: "Mr. Aquino" },
-      { time: "8:30 – 9:30 AM", subject: "English", room: "Room 105", teacher: "Ms. Lim" },
-      { time: "9:30 – 10:30 AM", subject: "Mathematics", room: "Room 203", teacher: "Mr. Reyes" },
-      { time: "10:30 – 11:30 AM", subject: "Filipino", room: "Room 201", teacher: "Ms. Dela Rosa" },
-      { time: "1:00 – 2:00 PM", subject: "Science", room: "Lab 1", teacher: "Mr. Cruz" },
-    ],
-  },
-  {
-    day: "Fri",
-    periods: [
-      { time: "7:30 – 8:30 AM", subject: "Science", room: "Lab 1", teacher: "Mr. Cruz" },
-      { time: "8:30 – 9:30 AM", subject: "MAPEH", room: "Gym", teacher: "Ms. Bautista" },
-      { time: "9:30 – 10:30 AM", subject: "English", room: "Room 105", teacher: "Ms. Lim" },
-      { time: "10:30 – 11:30 AM", subject: "Araling Panlipunan", room: "Room 302", teacher: "Mr. Aquino" },
-      { time: "1:00 – 2:00 PM", subject: "Mathematics", room: "Room 203", teacher: "Mr. Reyes" },
+      { time: "7:30", subject: "English", room: "105", teacher: "Ms. Lim" },
+      {
+        time: "8:30",
+        subject: "Mathematics",
+        room: "203",
+        teacher: "Mr. Reyes",
+      },
+      {
+        time: "9:30",
+        subject: "Filipino",
+        room: "201",
+        teacher: "Ms. Dela Rosa",
+      },
     ],
   },
 ];
